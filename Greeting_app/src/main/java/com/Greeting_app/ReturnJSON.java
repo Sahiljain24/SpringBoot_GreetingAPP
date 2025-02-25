@@ -47,6 +47,22 @@ public class ReturnJSON {
     public String hello6(){
         return greetingService.setMessage("HEllo post service by sahil");
     }
+    @GetMapping("/service/hello/post/fullName")
+    public String greet(){   //greet based on first and last name
+        return greetingService.getGreeting("Sahil","jain");
+    }
+    @GetMapping("/service/hello/post/firstName")
+    public String greet1(){   //greet based on first and last name
+        return greetingService.getGreeting("Sahil",null);
+    }
+    @GetMapping("/service/hello/post/lastName")
+    public String greet2(){   //greet based on first and last name
+        return greetingService.getGreeting(null,"jain");
+    }
+    @GetMapping("/service/hello/post/noName")
+    public String greet3(){   //greet based on first and last name
+        return greetingService.getGreeting(null,null);
+    }
 
 
 }
