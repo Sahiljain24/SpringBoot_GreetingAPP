@@ -106,4 +106,15 @@ public class ReturnJSON {
                     .body("Greeting with ID " + id + " not found");
         }
     }
+    @DeleteMapping("/delete/greeting/{id}")
+    public ResponseEntity<?> deleteGreeting(@PathVariable Long id) {
+        if (greetingRepositary.existsById(id)) {
+            greetingRepositary.deleteById(id);
+            return ResponseEntity.ok("Greeting with ID " + id + " has been deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Greeting with ID " + id + " not found");
+        }
+    }
+
 }
