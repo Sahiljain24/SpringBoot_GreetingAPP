@@ -4,8 +4,13 @@ package com.Greeting_app;
 import com.Greeting_app.Entity.GreetingEntity;
 import com.Greeting_app.repositary.GreetingRepositary;
 import com.Greeting_app.service.GreetingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 
 @RestController
 public class ReturnJSON {
@@ -80,7 +85,12 @@ public class ReturnJSON {
         return greetingRepositary.findById(id)
                 .orElseThrow(()->new RuntimeException("matching record not found0 " + id));
    }
+  @GetMapping("api/getall/greeting")
+    public ResponseEntity<List<GreetingEntity>> getallGreeting(){
+        List<GreetingEntity> list = greetingRepositary.findAll();
+         return ResponseEntity.ok(list);
 
+  }
 
 
 }
