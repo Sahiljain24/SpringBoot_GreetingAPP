@@ -75,6 +75,11 @@ public class ReturnJSON {
         return greetingRepositary.save(gn);
 
    }
+   @GetMapping("api/get/greeting/{id}")
+    public GreetingEntity getEntityById(@PathVariable Long id){
+        return greetingRepositary.findById(id)
+                .orElseThrow(()->new RuntimeException("matching record not found0 " + id));
+   }
 
 
 
