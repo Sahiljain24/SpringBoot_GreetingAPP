@@ -1,6 +1,8 @@
 package com.Greeting_app;
 
 
+import com.Greeting_app.Entity.GreetingEntity;
+import com.Greeting_app.repositary.GreetingRepositary;
 import com.Greeting_app.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class ReturnJSON {
 
     private final GreetingService greetingService;
-
+    private final GreetingRepositary greetingRepositary;
     @Autowired
-    public ReturnJSON(GreetingService greetingService) {
+    public ReturnJSON(GreetingService greetingService, GreetingRepositary greetingRepositary) {
         this.greetingService=greetingService;
+
+        this.greetingRepositary =greetingRepositary;
+
     }
 
     @GetMapping("/hello")
@@ -63,6 +68,14 @@ public class ReturnJSON {
     public String greet3(){   //greet based on first and last name
         return greetingService.getGreeting(null,null);
     }
+
+   @PostMapping("api/save/greeting")
+    public GreetingEntity saveGreeting(@RequestParam String message){
+       GreetingEntity gn= new GreetingEntity(message);
+        return greetingRepositary.save(gn);
+
+   }
+
 
 
 }
