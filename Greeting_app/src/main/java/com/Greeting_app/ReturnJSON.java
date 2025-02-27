@@ -6,11 +6,13 @@ import com.Greeting_app.repositary.GreetingRepositary;
 import com.Greeting_app.service.GreetingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ReturnJSON {
@@ -91,6 +93,17 @@ public class ReturnJSON {
          return ResponseEntity.ok(list);
 
   }
-
-
+    @PutMapping("/edit/greeting/{id}")
+    public ResponseEntity<?> updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
+        Optional<GreetingEntity> optionalGreeting = greetingRepositary .findById(id);
+        if (optionalGreeting.isPresent()) {
+            GreetingEntity greeting = optionalGreeting.get();
+            greeting.setMessage(newMessage);
+            GreetingEntity updatedGreeting = greetingRepositary .save(greeting);
+            return ResponseEntity.ok(updatedGreeting);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Greeting with ID " + id + " not found");
+        }
+    }
 }
